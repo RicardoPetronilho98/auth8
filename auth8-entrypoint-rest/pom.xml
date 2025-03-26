@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- #########################################################################  -->
+    <!-- #### P A R E N T _ P R O J E C T ######################################## -->
+    <!-- ######################################################################### -->
+
+    <parent>
+        <groupId>com.playground.auth8</groupId>
+        <artifactId>auth8</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ D E S C R I P T I O N ############################## -->
+    <!-- ######################################################################### -->
+
+    <artifactId>auth8-entrypoint-rest</artifactId>
+    <name>Auth Infinity :: Entry Point REST</name>
+    <description>Auth Infinity Entry Point REST Module</description>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ D E P E N D E N C I E S ############################ -->
+    <!-- ######################################################################### -->
+
+    <dependencies>
+        <!-- internal dependencies -->
+        <dependency>
+            <groupId>com.playground.auth8</groupId>
+            <artifactId>auth8-core</artifactId>
+        </dependency>
+
+        <!-- external dependencies -->
+    </dependencies>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ P R O P E R T I E S ################################ -->
+    <!-- ######################################################################### -->
+
+    <properties>
+    </properties>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ B U I L D ########################################## -->
+    <!-- ######################################################################### -->
+
+    <build>
+    </build>
+
+</project>

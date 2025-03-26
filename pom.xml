@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- #########################################################################  -->
+    <!-- #### P A R E N T _ P R O J E C T ######################################## -->
+    <!-- ######################################################################### -->
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.4</version>
+        <relativePath/> <!-- Prevent inheriting from a parent project -->
+    </parent>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ D E S C R I P T I O N ############################## -->
+    <!-- ######################################################################### -->
+
+    <groupId>com.playground.auth8</groupId>
+    <artifactId>auth8</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Auth Infinity</name>
+    <description>Auth Infinity Project</description>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ P R O P E R T I E S ################################ -->
+    <!-- ######################################################################### -->
+
+    <properties>
+        <maven.compiler.source>23</maven.compiler.source>
+        <maven.compiler.target>23</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ D E P E N D E N C I E S ############################ -->
+    <!-- ######################################################################### -->
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.playground.auth8</groupId>
+                <artifactId>auth8-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.playground.auth8</groupId>
+                <artifactId>auth8-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.playground.auth8</groupId>
+                <artifactId>auth8-entrypoint-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.playground.auth8</groupId>
+                <artifactId>auth8-dataprovider-nosql</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!--
+            Spring Security OAuth2 Authorization Server
+            To implement a custom Auth Server.
+        -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-authorization-server</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot OAuth2 Client
+            To integrate with Keycloak.
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+
+        <!--
+            JWT Token Support
+            To issue custom JWTs.
+        -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>10.0.2</version>
+        </dependency>
+
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Web
+            To implement a token-exchange endpoint.
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.36</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- MapStruct -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+
+        <!-- MapStruct processor -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>1.6.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ M O D U L E S ###################################### -->
+    <!-- ######################################################################### -->
+
+    <modules>
+        <module>auth8-application</module>
+        <module>auth8-core</module>
+        <module>auth8-entrypoint-rest</module>
+        <module>auth8-dataprovider-nosql</module>
+        <module>auth8-dataprovider-nosql</module>
+        <module>auth8-application</module>
+    </modules>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ B U I L D ########################################## -->
+    <!-- ######################################################################### -->
+
+    <build>
+    </build>
+
+</project>

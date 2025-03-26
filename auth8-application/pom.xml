@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- #########################################################################  -->
+    <!-- #### P A R E N T _ P R O J E C T ######################################## -->
+    <!-- ######################################################################### -->
+
+    <parent>
+        <groupId>com.playground.auth8</groupId>
+        <artifactId>auth8</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ D E S C R I P T I O N ############################## -->
+    <!-- ######################################################################### -->
+
+    <artifactId>auth8-application</artifactId>
+    <name>Auth Infinity :: Application</name>
+    <description>Auth Infinity Application Module</description>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ D E P E N D E N C I E S ############################ -->
+    <!-- ######################################################################### -->
+
+    <dependencies>
+        <!-- internal dependencies -->
+        <dependency>
+            <groupId>com.playground.auth8</groupId>
+            <artifactId>auth8-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.playground.auth8</groupId>
+            <artifactId>auth8-entrypoint-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.playground.auth8</groupId>
+            <artifactId>auth8-dataprovider-nosql</artifactId>
+        </dependency>
+
+        <!-- external dependencies -->
+    </dependencies>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ P R O P E R T I E S ################################ -->
+    <!-- ######################################################################### -->
+
+    <properties>
+        <start-class>com.playground.auth8.ExpenseTackerApplication</start-class>
+    </properties>
+
+    <!-- #########################################################################  -->
+    <!-- #### P R O J E C T _ B U I L D ########################################## -->
+    <!-- ######################################################################### -->
+
+    <build>
+        <plugins>
+            <!-- Enable annotation processing -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
+                <configuration>
+                    <source>23</source>
+                    <target>23</target>
+                    <annotationProcessorPaths>
+                        <!-- MapStruct Processor -->
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>1.6.3</version>
+                        </path>
+                        <!-- Lombok -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.36</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

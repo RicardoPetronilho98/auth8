@@ -1,0 +1,28 @@
+server:
+  port: 10000
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+
+oauth2:
+
+  # to validate subject token against idp
+  idp.jwks-uri: http://localhost:9001/auth/realms/master/protocol/openid-connect/certs
+
+  # to issue a custom JWT by Auth8
+  token:
+    endpoint: /oauth2/token
+    access:
+      ttl-minutes: 720 # 12 hours
+    refresh:
+      ttl-minutes: 1440 # 1 day
+      rotation: true
+    claims:
+      issuer: "com.playground.auth8"
+      audience: "com.playground.*"
