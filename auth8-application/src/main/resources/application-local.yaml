@@ -1,0 +1,7 @@
+server.port: 10000
+
+logging.level:
+  org.springframework.security: DEBUG
+  org.springframework.security.oauth2: DEBUG
+
+oauth2.idp.jwks-uri: http://localhost:9001/auth/realms/master/protocol/openid-connect/certs

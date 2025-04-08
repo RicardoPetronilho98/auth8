@@ -143,7 +143,6 @@
         <module>auth8-core</module>
         <module>auth8-entrypoint-rest</module>
         <module>auth8-dataprovider-nosql</module>
-        <module>auth8-dataprovider-nosql</module>
         <module>auth8-application</module>
     </modules>
 
