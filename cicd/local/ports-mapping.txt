@@ -1,0 +1,6 @@
+<service> <container_port> <host_port>
+
+postgres 5432  N/A
+adminer  8080  9000
+keycloak 8080  9001
+mongo    27017 9002

@@ -1,0 +1,79 @@
+{
+	"info": {
+		"_postman_id": "55c88d38-d2ab-4cba-a277-5c7ad0a3a58b",
+		"name": "Auth Infinity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7219001"
+	},
+	"item": [
+		{
+			"name": "Access Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();",
+							"pm.globals.set(\"access_token\", res.access_token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "tkMn2370744Lhs3W",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "auth8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "urn:ietf:params:oauth:grant-type:token-exchange",
+							"type": "text"
+						},
+						{
+							"key": "subject_token",
+							"value": "{{oidc}}",
+							"type": "text"
+						},
+						{
+							"key": "subject_token_type",
+							"value": "urn:ietf:params:oauth:token-type:access_token",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:10000/oauth2/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10000",
+					"path": [
+						"oauth2",
+						"token"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST \"http://localhost:8080/realms/myrealm/protocol/openid-connect/token\" \\\n  -H \"Content-Type: application/x-www-form-urlencoded\" \\\n  -d \"client_id=my-client\" \\\n  -d \"client_secret=my-secret\" \\\n  -d \"grant_type=password\" \\\n  -d \"username=myuser\" \\\n  -d \"password=mypass\"\n"
+			},
+			"response": []
+		}
+	]
+}

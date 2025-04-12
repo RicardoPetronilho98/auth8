@@ -1,0 +1,74 @@
+version: '3.9'
+
+volumes:
+  postgres-data:
+  mongo-data:
+
+services:
+
+  postgres:
+    container_name: postgres
+    image: postgres:17.4
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=keycloak
+      - POSTGRES_DB=keycloak
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U keycloak -d keycloak" ]
+      interval: 30s # Runs every 30 seconds.
+      timeout: 10s # Waits 10 seconds before considering the check failed.
+      retries: 5 # Retries 5 times before marking the container as unhealthy.
+      start_period: 10s # Gives PostgreSQL 10 seconds before the first check.
+
+  adminer:
+    container_name: adminer
+    image: adminer:5.0.6
+    restart: unless-stopped
+    ports:
+      - "9000:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  keycloak:
+    container_name: keycloak
+    build:
+      context: ./keycloak
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "9001:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail http://localhost:8080/realms/master/protocol/openid-connect/certs || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+
+  mongo:
+    image: mongo:8.0.6
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - "9002:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=auth8
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s

@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "c8f00860-8ce3-4704-a1cf-c017f844707b",
+		"name": "Keycloak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7219001"
+	},
+	"item": [
+		{
+			"name": "Grant Type Authorization Code",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9001/auth/realms/master/protocol/openid-connect/auth?client_id=auth8&response_type=code&scope=openid&redirect_uri=https://run.mocky.io/v3/ea6da638-194b-4a2d-adc5-49803449f492",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"auth",
+								"realms",
+								"master",
+								"protocol",
+								"openid-connect",
+								"auth"
+							],
+							"query": [
+								{
+									"key": "client_id",
+									"value": "auth8"
+								},
+								{
+									"key": "response_type",
+									"value": "code"
+								},
+								{
+									"key": "scope",
+									"value": "openid"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://run.mocky.io/v3/ea6da638-194b-4a2d-adc5-49803449f492"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OIDC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();",
+									"pm.globals.set(\"oidc\", res.access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "auth8",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "VwJkcTXpHVdwROpHnYBViVoSz9uZIhpk",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://run.mocky.io/v3/7f207f7b-9509-4c60-a7e2-60b5bbc5b5a7",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "14e22613-7395-45c5-abd2-cfc1c2029ef2.7fc9ede8-49d9-49c0-ab6d-8a13f158733c.a9b338ab-9c24-4704-b117-efdd1220e3ce",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9001/auth/realms/master/protocol/openid-connect/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"auth",
+								"realms",
+								"master",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST \"http://localhost:8080/realms/myrealm/protocol/openid-connect/token\" \\\n  -H \"Content-Type: application/x-www-form-urlencoded\" \\\n  -d \"client_id=my-client\" \\\n  -d \"client_secret=my-secret\" \\\n  -d \"grant_type=password\" \\\n  -d \"username=myuser\" \\\n  -d \"password=mypass\"\n"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
