@@ -1,6 +1,7 @@
 package com.playground.auth8.rest.auth;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,9 +13,10 @@ import com.playground.auth8.service.ClientDetailsService;
 
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
-public class ClientAuthenticationProvider implements AuthenticationProvider {
+public class BasicAuthProvider implements AuthenticationProvider {
 
     private final ClientDetailsService clientService;
 
@@ -27,6 +29,8 @@ public class ClientAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Invalid client credentials");
         }
 
+        log.debug("authentication granted for client {}", clientId);
+
         return new UsernamePasswordAuthenticationToken(clientId, null, List.of(new SimpleGrantedAuthority("ROLE_CLIENT")));
     }
 
@@ -34,4 +38,5 @@ public class ClientAuthenticationProvider implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
+
 }

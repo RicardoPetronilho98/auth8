@@ -3,5 +3,8 @@ server.port: 10000
 logging.level:
   org.springframework.security: DEBUG
   org.springframework.security.oauth2: DEBUG
+  com.playground.auth8: TRACE
 
 oauth2.idp.jwks-uri: http://localhost:9001/auth/realms/master/protocol/openid-connect/certs
+
+spring.data.mongodb.uri: "mongodb://admin:admin@localhost:9002/auth8?authSource=admin"

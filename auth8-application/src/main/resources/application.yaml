@@ -4,6 +4,10 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
+  data:
+    mongodb:
+      uri: ${MONGO_DB}
+
 oauth2:
 
   # to validate subject token against idp
