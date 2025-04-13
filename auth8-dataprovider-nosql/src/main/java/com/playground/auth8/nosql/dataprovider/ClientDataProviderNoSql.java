@@ -2,6 +2,8 @@ package com.playground.auth8.nosql.dataprovider;
 
 import com.playground.auth8.dataprovider.ClientDataProvider;
 import com.playground.auth8.domain.Client;
+import com.playground.auth8.exception.BaseException;
+import com.playground.auth8.exception.ErrorCode;
 import com.playground.auth8.nosql.document.ClientDocument;
 import com.playground.auth8.nosql.mapper.ClientMapper;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,12 @@ public class ClientDataProviderNoSql implements ClientDataProvider {
                 .stream()
                 .map(mapper::toClient)
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException(String.format("Client %s not found", id))); // TODO
+                .orElseThrow(() ->
+                        new BaseException(
+                                ErrorCode.NOT_FOUND,
+                                String.format("Client %s not found", id)
+                        )
+                );
     }
 
 }

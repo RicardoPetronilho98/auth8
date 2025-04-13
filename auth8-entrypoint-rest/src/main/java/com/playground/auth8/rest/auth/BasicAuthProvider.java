@@ -1,5 +1,7 @@
 package com.playground.auth8.rest.auth;
 
+import com.playground.auth8.exception.BaseException;
+import com.playground.auth8.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -26,7 +28,10 @@ public class BasicAuthProvider implements AuthenticationProvider {
         String clientSecret = authentication.getCredentials().toString();
 
         if (!clientService.validate(clientId, clientSecret)) {
-            throw new BadCredentialsException("Invalid client credentials");
+            throw new BaseException(
+                    ErrorCode.AUTHENTICATION_FAILED,
+                    "Invalid client credentials"
+            );
         }
 
         log.debug("authentication granted for client {}", clientId);

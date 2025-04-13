@@ -10,59 +10,14 @@
 			"name": "Grant Type Authorization Code",
 			"item": [
 				{
-					"name": "Login",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:9001/auth/realms/master/protocol/openid-connect/auth?client_id=auth8&response_type=code&scope=openid&redirect_uri=https://run.mocky.io/v3/ea6da638-194b-4a2d-adc5-49803449f492",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "9001",
-							"path": [
-								"auth",
-								"realms",
-								"master",
-								"protocol",
-								"openid-connect",
-								"auth"
-							],
-							"query": [
-								{
-									"key": "client_id",
-									"value": "auth8"
-								},
-								{
-									"key": "response_type",
-									"value": "code"
-								},
-								{
-									"key": "scope",
-									"value": "openid"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https://run.mocky.io/v3/ea6da638-194b-4a2d-adc5-49803449f492"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "OIDC",
+					"name": "Access Token",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
 									"const res = pm.response.json();",
-									"pm.globals.set(\"oidc\", res.access_token);"
+									"pm.globals.set(\"keycloak_access_token\", res.access_token);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -77,12 +32,12 @@
 							"urlencoded": [
 								{
 									"key": "client_id",
-									"value": "auth8",
+									"value": "{{client-id}}",
 									"type": "text"
 								},
 								{
 									"key": "client_secret",
-									"value": "VwJkcTXpHVdwROpHnYBViVoSz9uZIhpk",
+									"value": "{{client-secret}}",
 									"type": "text"
 								},
 								{
@@ -92,12 +47,12 @@
 								},
 								{
 									"key": "redirect_uri",
-									"value": "https://run.mocky.io/v3/7f207f7b-9509-4c60-a7e2-60b5bbc5b5a7",
+									"value": "http://localhost:3000/authorization-code-flow",
 									"type": "text"
 								},
 								{
 									"key": "code",
-									"value": "14e22613-7395-45c5-abd2-cfc1c2029ef2.7fc9ede8-49d9-49c0-ab6d-8a13f158733c.a9b338ab-9c24-4704-b117-efdd1220e3ce",
+									"value": "218daae9-366c-4dfb-a937-db2d4a801eec.8f6e5e1e-19f1-4566-995f-8a0195ea7857.e4905e34-ee50-4aa1-a324-9a5ff43cbd61",
 									"type": "text"
 								}
 							]

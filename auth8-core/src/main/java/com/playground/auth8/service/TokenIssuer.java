@@ -5,6 +5,8 @@ import com.playground.auth8.domain.Client;
 import com.playground.auth8.domain.TokenRequest;
 import com.playground.auth8.domain.TokenResponse;
 import com.playground.auth8.domain.TokenType;
+import com.playground.auth8.exception.BaseException;
+import com.playground.auth8.exception.ErrorCode;
 import com.playground.auth8.util.OAuth2Properties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +50,10 @@ public class TokenIssuer {
         try {
             return jwtDecoder.decode(tokenRequest.subjectToken());
         } catch (JwtException e) {
-            throw new RuntimeException(); // TODO
+            throw new BaseException(
+                    ErrorCode.BAD_REQUEST,
+                    "Unable to decode or validate subject_token"
+            );
         }
     }
 
@@ -74,7 +79,10 @@ public class TokenIssuer {
                 return clientId;
             }
         }
-        throw new RuntimeException("could not access authenticated client"); // TODO
+        throw new BaseException(
+                ErrorCode.INTERNAL_SERVER_ERROR,
+                "could not access authenticated client"
+        );
     }
 
 }

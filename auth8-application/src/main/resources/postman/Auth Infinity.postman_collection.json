@@ -27,12 +27,12 @@
 					"basic": [
 						{
 							"key": "password",
-							"value": "tkMn2370744Lhs3W",
+							"value": "password",
 							"type": "string"
 						},
 						{
 							"key": "username",
-							"value": "auth8",
+							"value": "book-manager",
 							"type": "string"
 						}
 					]
@@ -49,7 +49,7 @@
 						},
 						{
 							"key": "subject_token",
-							"value": "{{oidc}}",
+							"value": "{{keycloak_access_token}}",
 							"type": "text"
 						},
 						{
