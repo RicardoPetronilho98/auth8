@@ -1,5 +1,8 @@
 package com.playground.auth8.rest.config;
 
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.KeyUse;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -48,13 +51,26 @@ public class SecurityConfig {
     public RSAKey rsaJwk(KeyPair keyPair) {
         return new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
                 .privateKey((RSAPrivateKey) keyPair.getPrivate())
+                .keyUse(KeyUse.SIGNATURE)
+                .algorithm(JWSAlgorithm.RS512)
                 .keyID(UUID.randomUUID().toString())
                 .build();
     }
 
     @Bean
+    public JWKSource<SecurityContext> jwkSource(RSAKey rsaKey) {
+        JWKSet jwkSet = new JWKSet(rsaKey);
+        return (jwkSelector, context) -> jwkSelector.select(jwkSet);
+    }
+
+    @Bean
+    public JWKSet jwkSet(RSAKey rsaKey) {
+        return new JWKSet(rsaKey.toPublicJWK()); // only expose public key
+    }
+
+    @Bean
     public JwtEncoder jwtEncoder(RSAKey rsaKey) {
-        JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new com.nimbusds.jose.jwk.JWKSet(rsaKey));
+        JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(rsaKey));
         return new NimbusJwtEncoder(jwks);
     }
 
@@ -68,10 +84,11 @@ public class SecurityConfig {
         return http.authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(HttpMethod.POST, OAuth2Properties.getToken().getEndpoint()).authenticated()
+                                .requestMatchers(HttpMethod.GET,"/.well-known/jwks.json").permitAll() // ✅ JWKS is public
                                 .anyRequest().denyAll()
                 ).csrf(csrf -> csrf.ignoringRequestMatchers(OAuth2Properties.getToken().getEndpoint()))
                 .httpBasic(withDefaults()) // ✅ Channel auth: client_id + client_secret
-                .oauth2ResourceServer(resource -> resource.jwt(withDefaults())) // ✅ validate subject_token from Keycloak
+                .oauth2ResourceServer(resource -> resource.jwt(withDefaults())) // ✅ validate subject_token from IdP
                 .build();
     }
 

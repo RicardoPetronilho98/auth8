@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-public class TokenGranter implements TokenGranterApi {
+public class TokenGranterController implements TokenGranterApi {
 
     private final TokenIssuer issuer;
 
