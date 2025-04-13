@@ -114,6 +114,11 @@ oauth2:
 - ✅ Multi-tenancy support
 - ✅ Admin UI / dashboard
 
+## 🤔 Technical Enhancements
+- ✅ Database encryption / hashing
+- ✅ HTTPS support
+- ✅ Logging
+
 ---
 
 ## 🌟 Contributing
