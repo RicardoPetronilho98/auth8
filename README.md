@@ -24,6 +24,7 @@ Auth8 serves as a **token exchange server** that:
 - ✅ Optional refresh token support
 - ✅ Role and scope mapping
 - ✅ Built-in client authentication
+- ✅ JWKS endpoint for issued tokens
 - ✅ Secure-by-default with fine-grained HTTP method and endpoint restrictions
 
 ---
@@ -108,7 +109,6 @@ oauth2:
 ---
 
 ## 🤔 Future Enhancements
-- ✅ JWKS endpoint for issued tokens
 - ✅ Dynamic IdP discovery
 - ✅ Per-client policies (scope restriction, aud mapping)
 - ✅ Multi-tenancy support
@@ -117,7 +117,7 @@ oauth2:
 ## 🤔 Technical Enhancements
 - ✅ Database encryption / hashing
 - ✅ HTTPS support
-- ✅ Logging
+- ✅ Logging, with Personally Identifiable Information (PII) obfuscated
 
 ---
 
