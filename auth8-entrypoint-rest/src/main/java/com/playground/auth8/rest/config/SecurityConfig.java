@@ -7,7 +7,9 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import com.playground.auth8.util.OAuth2Properties;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,13 +20,11 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import com.playground.auth8.util.OAuth2Properties;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.UUID;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -48,30 +48,33 @@ public class SecurityConfig {
     }
 
     @Bean
-    public RSAKey rsaJwk(KeyPair keyPair) {
+    public RSAKey rsaKey(KeyPair keyPair) {
         return new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
                 .privateKey((RSAPrivateKey) keyPair.getPrivate())
                 .keyUse(KeyUse.SIGNATURE)
-                .algorithm(JWSAlgorithm.RS512)
-                .keyID(UUID.randomUUID().toString())
+                .algorithm(JWSAlgorithm.RS256)
+                .keyID("auth8-key")
                 .build();
     }
 
-    @Bean
-    public JWKSource<SecurityContext> jwkSource(RSAKey rsaKey) {
-        JWKSet jwkSet = new JWKSet(rsaKey);
-        return (jwkSelector, context) -> jwkSelector.select(jwkSet);
-    }
-
-    @Bean
+    @Bean(name = "publicAndPrivateJwkSet")
     public JWKSet jwkSet(RSAKey rsaKey) {
-        return new JWKSet(rsaKey.toPublicJWK()); // only expose public key
+        return new JWKSet(rsaKey); // ✅ includes public and private key
+    }
+
+    @Bean(name = "publicJwkSet")
+    public JWKSet publicJwkSet(RSAKey rsaKey) {
+        return new JWKSet(rsaKey.toPublicJWK()); // ✅ includes only public key
     }
 
     @Bean
-    public JwtEncoder jwtEncoder(RSAKey rsaKey) {
-        JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(rsaKey));
-        return new NimbusJwtEncoder(jwks);
+    public JWKSource<SecurityContext> jwkSource(@Qualifier("publicAndPrivateJwkSet") JWKSet jwkSet) {
+        return new ImmutableJWKSet<>(jwkSet);
+    }
+
+    @Bean
+    public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
+        return new NimbusJwtEncoder(jwkSource);
     }
 
     @Bean
@@ -84,7 +87,7 @@ public class SecurityConfig {
         return http.authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(HttpMethod.POST, OAuth2Properties.getToken().getEndpoint()).authenticated()
-                                .requestMatchers(HttpMethod.GET,"/.well-known/jwks.json").permitAll() // ✅ JWKS is public
+                                .requestMatchers(HttpMethod.GET, "/.well-known/jwks.json").permitAll() // ✅ JWKS is public
                                 .anyRequest().denyAll()
                 ).csrf(csrf -> csrf.ignoringRequestMatchers(OAuth2Properties.getToken().getEndpoint()))
                 .httpBasic(withDefaults()) // ✅ Channel auth: client_id + client_secret
