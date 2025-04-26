@@ -24,3 +24,7 @@ oauth2:
     claims:
       issuer: "com.playground.auth8"
       audience: "com.playground.*"
+
+logging:
+  payload:
+    maxLength: 5000 # 5 KB
