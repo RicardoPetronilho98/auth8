@@ -49,7 +49,7 @@
     <!-- ######################################################################### -->
 
     <properties>
-        <start-class>com.playground.auth8.ExpenseTackerApplication</start-class>
+        <start-class>com.playground.auth8.app.App</start-class>
     </properties>
 
     <!-- #########################################################################  -->
